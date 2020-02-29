@@ -7,13 +7,13 @@
         </el-input>
         <span class="info">用户未付款，则订单自动取消</span>
       </el-form-item>
-      <el-form-item label="订单发货后超期" prop="litemall_order_unconfirm">
+      <el-form-item label="订单付款后超期" prop="litemall_order_unconfirm">
         <el-input v-model="dataForm.litemall_order_unconfirm" class="input-width">
           <template slot="append"> 天</template>
         </el-input>
-        <span class="info">未确认收货，则订单自动确认收货</span>
+        <span class="info">未确认，则订单自动确认</span>
       </el-form-item>
-      <el-form-item label="确认收货后超期" prop="litemall_order_comment">
+      <el-form-item label="确认后超期" prop="litemall_order_comment">
         <el-input v-model="dataForm.litemall_order_comment" class="input-width">
           <template slot="append">天</template>
         </el-input>

@@ -3,9 +3,9 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 160px;" placeholder="请输入商品ID" />
-      <el-input v-model="listQuery.goodsSn" clearable class="filter-item" style="width: 160px;" placeholder="请输入商品编号" />
-      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 160px;" placeholder="请输入商品名称" />
+      <el-input v-model="listQuery.goodsId" clearable class="filter-item" style="width: 160px;" placeholder="请输入课程ID" />
+      <el-input v-model="listQuery.goodsSn" clearable class="filter-item" style="width: 160px;" placeholder="请输入课程编号" />
+      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 160px;" placeholder="请输入课程名称" />
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
       <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
@@ -17,16 +17,16 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" class="table-expand">
-            <el-form-item label="商品编号">
+            <el-form-item label="课程编号">
               <span>{{ props.row.goodsSn }}</span>
             </el-form-item>
             <el-form-item label="宣传画廊">
               <img v-for="pic in props.row.gallery" :key="pic" :src="pic" class="gallery">
             </el-form-item>
-            <el-form-item label="商品介绍">
+            <el-form-item label="课程介绍">
               <span>{{ props.row.brief }}</span>
             </el-form-item>
-            <el-form-item label="商品单位">
+            <el-form-item label="课程单位">
               <span>{{ props.row.unit }}</span>
             </el-form-item>
             <el-form-item label="关键字">
@@ -35,7 +35,7 @@
             <el-form-item label="类目ID">
               <span>{{ props.row.categoryId }}</span>
             </el-form-item>
-            <el-form-item label="品牌商ID">
+            <el-form-item label="品牌机构ID">
               <span>{{ props.row.brandId }}</span>
             </el-form-item>
 
@@ -43,7 +43,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="商品ID" prop="id" />
+      <el-table-column align="center" label="课程ID" prop="id" />
 
       <el-table-column align="center" min-width="100" label="名称" prop="name" />
 
@@ -61,7 +61,7 @@
 
       <el-table-column align="center" label="详情" prop="detail">
         <template slot-scope="scope">
-          <el-dialog :visible.sync="detailDialogVisible" title="商品详情">
+          <el-dialog :visible.sync="detailDialogVisible" title="课程详情">
             <div class="goods-detail-box" v-html="goodsDetail" />
           </el-dialog>
           <el-button type="primary" size="mini" @click="showDetail(scope.row.detail)">查看</el-button>
@@ -202,7 +202,7 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['商品ID', '商品编号', '名称', '专柜价格', '当前价格', '是否新品', '是否热品', '是否在售', '首页主图', '宣传图片列表', '商品介绍', '详细介绍', '商品图片', '商品单位', '关键字', '类目ID', '品牌商ID']
+        const tHeader = ['课程ID', '课程编号', '名称', '专柜价格', '当前价格', '是否新品', '是否热品', '是否在售', '首页主图', '宣传图片列表', '课程介绍', '详细介绍', '课程图片', '课程单位', '关键字', '类目ID', '品牌机构ID']
         const filterVal = ['id', 'goodsSn', 'name', 'counterPrice', 'retailPrice', 'isNew', 'isHot', 'isOnSale', 'listPicUrl', 'gallery', 'brief', 'detail', 'picUrl', 'goodsUnit', 'keywords', 'categoryId', 'brandId']
         excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品信息')
         this.downloadLoading = false

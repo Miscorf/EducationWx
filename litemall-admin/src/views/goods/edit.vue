@@ -4,13 +4,13 @@
     <el-card class="box-card">
       <h3>商品介绍</h3>
       <el-form ref="goods" :rules="rules" :model="goods" label-width="150px">
-        <el-form-item label="商品ID" prop="id">
+        <el-form-item label="课程ID" prop="id">
           <el-input v-model="goods.id" disabled />
         </el-form-item>
-        <el-form-item label="商品名称" prop="name">
+        <el-form-item label="课程名称" prop="name">
           <el-input v-model="goods.name" />
         </el-form-item>
-        <el-form-item label="商品编号" prop="goodsSn">
+        <el-form-item label="课程编号" prop="goodsSn">
           <el-input v-model="goods.goodsSn" />
         </el-form-item>
         <el-form-item label="市场售价" prop="counterPrice">
@@ -37,7 +37,7 @@
           </el-radio-group>
         </el-form-item>
 
-        <el-form-item label="商品图片">
+        <el-form-item label="课程图片">
           <el-upload
             :headers="headers"
             :action="uploadPath"
@@ -68,7 +68,7 @@
           </el-upload>
         </el-form-item>
 
-        <el-form-item label="商品单位">
+        <el-form-item label="课程单位">
           <el-input v-model="goods.unit" placeholder="件 / 个 / 盒" />
         </el-form-item>
 
@@ -84,24 +84,24 @@
           <el-cascader v-model="categoryIds" :options="categoryList" clearable expand-trigger="hover" @change="handleCategoryChange" />
         </el-form-item>
 
-        <el-form-item label="所属品牌商">
+        <el-form-item label="所属品牌机构">
           <el-select v-model="goods.brandId" clearable>
             <el-option v-for="item in brandList" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
 
-        <el-form-item label="商品简介">
+        <el-form-item label="课程简介">
           <el-input v-model="goods.brief" />
         </el-form-item>
 
-        <el-form-item label="商品详细介绍">
+        <el-form-item label="课程详细介绍">
           <editor v-model="goods.detail" :init="editorInit" />
         </el-form-item>
       </el-form>
     </el-card>
 
     <el-card class="box-card">
-      <h3>商品规格</h3>
+      <h3>课程详情</h3>
       <el-table :data="specifications">
         <el-table-column property="specification" label="规格名" />
         <el-table-column property="value" label="规格值">
@@ -153,18 +153,18 @@
     </el-card>
 
     <el-card class="box-card">
-      <h3>商品库存</h3>
+      <h3>课程库存</h3>
       <el-table :data="products">
-        <el-table-column property="value" label="货品规格">
+        <el-table-column property="value" label="课程规格">
           <template slot-scope="scope">
             <el-tag v-for="tag in scope.row.specifications" :key="tag">
               {{ tag }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column property="price" label="货品售价" />
-        <el-table-column property="number" label="货品数量" />
-        <el-table-column property="url" label="货品图片">
+        <el-table-column property="price" label="售价" />
+        <el-table-column property="number" label="数量" />
+        <el-table-column property="url" label="图片">
           <template slot-scope="scope">
             <img v-if="scope.row.url" :src="scope.row.url" width="40">
           </template>
@@ -176,20 +176,20 @@
         </el-table-column>
       </el-table>
 
-      <el-dialog :visible.sync="productVisiable" title="编辑货品">
+      <el-dialog :visible.sync="productVisiable" title="编辑">
         <el-form ref="productForm" :model="productForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-          <el-form-item label="货品规格列" prop="specifications">
+          <el-form-item label="规格列" prop="specifications">
             <el-tag v-for="tag in productForm.specifications" :key="tag">
               {{ tag }}
             </el-tag>
           </el-form-item>
-          <el-form-item label="货品售价" prop="price">
+          <el-form-item label="售价" prop="price">
             <el-input v-model="productForm.price" />
           </el-form-item>
-          <el-form-item label="货品数量" prop="number">
+          <el-form-item label="数量" prop="number">
             <el-input v-model="productForm.number" />
           </el-form-item>
-          <el-form-item label="货品图片" prop="url">
+          <el-form-item label="图片" prop="url">
             <el-upload
               :headers="headers"
               :action="uploadPath"
@@ -214,8 +214,8 @@
       <h3>商品参数</h3>
       <el-button type="primary" @click="handleAttributeShow">添加</el-button>
       <el-table :data="attributesData">
-        <el-table-column property="attribute" label="商品参数名称" />
-        <el-table-column property="value" label="商品参数值" />
+        <el-table-column property="attribute" label="参数名称" />
+        <el-table-column property="value" label="参数值" />
         <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleAttributeShow(scope.row)">设置</el-button>
@@ -224,12 +224,12 @@
         </el-table-column>
       </el-table>
 
-      <el-dialog :visible.sync="attributeVisiable" :title="attributeAdd ? '添加商品参数' : '编辑商品参数'">
+      <el-dialog :visible.sync="attributeVisiable" :title="attributeAdd ? '添加参数' : '编辑参数'">
         <el-form ref="attributeForm" :model="attributeForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-          <el-form-item label="商品参数名称" prop="attribute">
+          <el-form-item label="参数名称" prop="attribute">
             <el-input v-model="attributeForm.attribute" />
           </el-form-item>
-          <el-form-item label="商品参数值" prop="value">
+          <el-form-item label="参数值" prop="value">
             <el-input v-model="attributeForm.value" />
           </el-form-item>
         </el-form>
@@ -243,7 +243,7 @@
 
     <div class="op-container">
       <el-button @click="handleCancel">取消</el-button>
-      <el-button type="primary" @click="handleEdit">更新商品</el-button>
+      <el-button type="primary" @click="handleEdit">更新课程</el-button>
     </div>
 
   </div>
@@ -330,7 +330,7 @@ export default {
       attributeForm: { attribute: '', value: '' },
       attributes: [],
       rules: {
-        name: [{ required: true, message: '商品名称不能为空', trigger: 'blur' }]
+        name: [{ required: true, message: '课程名称不能为空', trigger: 'blur' }]
       },
       editorInit: {
         language: 'zh_CN',

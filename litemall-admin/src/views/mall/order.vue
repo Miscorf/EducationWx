@@ -63,18 +63,18 @@
             <span>{{ orderDetail.order.message }}</span>
           </el-form-item>
           <el-form-item label="收货信息">
-            <span>（收货人）{{ orderDetail.order.consignee }}</span>
+            <span>（用户名）{{ orderDetail.order.consignee }}</span>
             <span>（手机号）{{ orderDetail.order.mobile }}</span>
             <span>（地址）{{ orderDetail.order.address }}</span>
           </el-form-item>
           <el-form-item label="商品信息">
             <el-table :data="orderDetail.orderGoods" border fit highlight-current-row>
-              <el-table-column align="center" label="商品名称" prop="goodsName" />
-              <el-table-column align="center" label="商品编号" prop="goodsSn" />
-              <el-table-column align="center" label="货品规格" prop="specifications" />
-              <el-table-column align="center" label="货品价格" prop="price" />
-              <el-table-column align="center" label="货品数量" prop="number" />
-              <el-table-column align="center" label="货品图片" prop="picUrl">
+              <el-table-column align="center" label="课程名称" prop="goodsName" />
+              <el-table-column align="center" label="课程编号" prop="goodsSn" />
+              <el-table-column align="center" label="规格" prop="specifications" />
+              <el-table-column align="center" label="课程价格" prop="price" />
+              <el-table-column align="center" label="课程数量" prop="number" />
+              <el-table-column align="center" label="课程图片" prop="picUrl">
                 <template slot-scope="scope">
                   <img :src="scope.row.picUrl" width="40">
                 </template>
@@ -94,19 +94,21 @@
             <span>（支付渠道）微信支付</span>
             <span>（支付时间）{{ orderDetail.order.payTime }}</span>
           </el-form-item>
+          <!--
           <el-form-item label="快递信息">
             <span>（快递公司）{{ orderDetail.order.shipChannel }}</span>
             <span>（快递单号）{{ orderDetail.order.shipSn }}</span>
             <span>（发货时间）{{ orderDetail.order.shipTime }}</span>
           </el-form-item>
+          !-->
           <el-form-item label="退款信息">
             <span>（退款金额）{{ orderDetail.order.refundAmount }}元</span>
             <span>（退款类型）{{ orderDetail.order.refundType }}</span>
             <span>（退款备注）{{ orderDetail.order.refundContent }}</span>
             <span>（退款时间）{{ orderDetail.order.refundTime }}</span>
           </el-form-item>
-          <el-form-item label="收货信息">
-            <span>（确认收货时间）{{ orderDetail.order.confirmTime }}</span>
+          <el-form-item label="核验信息">
+            <span>（确认核验时间）{{ orderDetail.order.confirmTime }}</span>
           </el-form-item>
         </el-form>
       </section>
@@ -116,24 +118,24 @@
       </span>
     </el-dialog>
 
-    <!-- 发货对话框 -->
-    <el-dialog :visible.sync="shipDialogVisible" title="发货">
-      <el-form ref="shipForm" :model="shipForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="快递公司" prop="shipChannel">
-          <el-select v-model="shipForm.shipChannel" placeholder="请选择">
-            <el-option v-for="item in channels" :key="item.code" :label="item.name" :value="item.code" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="快递编号" prop="shipSn">
-          <el-input v-model="shipForm.shipSn" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="shipDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmShip">确定</el-button>
-      </div>
-    </el-dialog>
-
+    <!--    &lt;!&ndash; 发货对话框 &ndash;&gt;-->
+    <!--    <el-dialog :visible.sync="shipDialogVisible" title="发货">-->
+    <!--      <el-form ref="shipForm" :model="shipForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">-->
+    <!--        <el-form-item label="快递公司" prop="shipChannel">-->
+    <!--          <el-select v-model="shipForm.shipChannel" placeholder="请选择">-->
+    <!--            <el-option v-for="item in channels" :key="item.code" :label="item.name" :value="item.code" />-->
+    <!--          </el-select>-->
+    <!--        </el-form-item>-->
+    <!--        <el-form-item label="快递编号" prop="shipSn">-->
+    <!--          <el-input v-model="shipForm.shipSn" />-->
+    <!--        </el-form-item>-->
+    <!--      </el-form>-->
+    <!--      <div slot="footer" class="dialog-footer">-->
+    <!--        <el-button @click="shipDialogVisible = false">取消</el-button>-->
+    <!--        <el-button type="primary" @click="confirmShip">确定</el-button>-->
+    <!--      </div>-->
+    <!--    </el-dialog>-->
+    <!--   -->
     <!-- 退款对话框 -->
     <el-dialog :visible.sync="refundDialogVisible" title="退款">
       <el-form ref="refundForm" :model="refundForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
@@ -164,9 +166,9 @@ const statusMap = {
   202: '申请退款',
   203: '已退款',
   204: '已超时团购',
-  301: '已发货',
-  401: '用户收货',
-  402: '系统收货'
+  301: '已确认',
+  401: '用户确认',
+  402: '系统确认'
 }
 
 export default {
@@ -306,7 +308,7 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['订单ID', '订单编号', '用户ID', '订单状态', '是否删除', '收货人', '收货联系电话', '收货地址']
+        const tHeader = ['订单ID', '订单编号', '用户ID', '订单状态', '是否删除', '用户名', '联系电话', '地址']
         const filterVal = ['id', 'orderSn', 'userId', 'orderStatus', 'isDelete', 'consignee', 'mobile', 'address']
         excel.export_json_to_excel2(tHeader, this.list, filterVal, '订单信息')
         this.downloadLoading = false

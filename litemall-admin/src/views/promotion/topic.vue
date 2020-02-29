@@ -3,8 +3,8 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.title" clearable class="filter-item" style="width: 200px;" placeholder="请输入专题标题" />
-      <el-input v-model="listQuery.subtitle" clearable class="filter-item" style="width: 200px;" placeholder="请输入专题子标题" />
+      <el-input v-model="listQuery.title" clearable class="filter-item" style="width: 200px;" placeholder="请输入在线课程名称" />
+      <el-input v-model="listQuery.subtitle" clearable class="filter-item" style="width: 200px;" placeholder="请输入子名称" />
       <el-select v-model="listQuery.sort" class="filter-item" placeholder="请选择排序字段">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
@@ -21,9 +21,9 @@
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
 
-      <el-table-column align="center" label="专题标题" prop="title" />
+      <el-table-column align="center" label="在线课程名称" prop="title" />
 
-      <el-table-column align="center" label="专题子标题" min-width="200" prop="subtitle" />
+      <el-table-column align="center" label="在线课程子名称" min-width="200" prop="subtitle" />
 
       <el-table-column align="center" property="picUrl" label="图片">
         <template slot-scope="scope">
@@ -31,9 +31,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="专题详情" prop="content">
+      <el-table-column align="center" label="详情" prop="content">
         <template slot-scope="scope">
-          <el-dialog :visible.sync="contentDialogVisible" title="专题详情">
+          <el-dialog :visible.sync="contentDialogVisible" title="详情">
             <div v-html="contentDetail" />
           </el-dialog>
           <el-button type="primary" size="mini" @click="showContent(scope.row.content)">查看</el-button>
@@ -161,7 +161,7 @@ export default {
         .then(response => {
           this.$notify.success({
             title: '成功',
-            message: '删除专题成功'
+            message: '删除成功'
           })
           const index = this.list.indexOf(row)
           this.list.splice(index, 1)
@@ -193,7 +193,7 @@ export default {
         .then(response => {
           this.$notify.success({
             title: '成功',
-            message: '批量删除专题成功'
+            message: '批量删除成功'
           })
           this.getList()
         })
@@ -208,12 +208,12 @@ export default {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = [
-          '专题ID',
-          '专题标题',
-          '专题子标题',
-          '专题内容',
-          '专题图片',
-          '商品低价',
+          'ID',
+          '在线课程名称',
+          '在线课程子标题',
+          '内容',
+          '图片',
+          '低价',
           '阅读量',
           '专题商品'
         ]
@@ -227,7 +227,7 @@ export default {
           'readCount',
           'goods'
         ]
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '专题信息')
+        excel.export_json_to_excel2(tHeader, this.list, filterVal, '在线课程信息')
         this.downloadLoading = false
       })
     }

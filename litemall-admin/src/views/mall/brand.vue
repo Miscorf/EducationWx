@@ -3,8 +3,8 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input v-model="listQuery.id" clearable class="filter-item" style="width: 200px;" placeholder="请输入品牌商ID"/>
-      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 200px;" placeholder="请输入品牌商名称"/>
+      <el-input v-model="listQuery.id" clearable class="filter-item" style="width: 200px;" placeholder="请输入品牌机构ID" />
+      <el-input v-model="listQuery.name" clearable class="filter-item" style="width: 200px;" placeholder="请输入品牌机构名称" />
       <el-button v-permission="['GET /admin/brand/list']" class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button v-permission="['POST /admin/brand/create']" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
       <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
@@ -13,19 +13,19 @@
     <!-- 查询结果 -->
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在查询中。。。" border fit highlight-current-row>
 
-      <el-table-column align="center" label="品牌商ID" prop="id"/>
+      <el-table-column align="center" label="品牌机构ID" prop="id" />
 
-      <el-table-column align="center" label="品牌商名称" prop="name"/>
+      <el-table-column align="center" label="品牌机构名称" prop="name" />
 
-      <el-table-column align="center" property="picUrl" label="品牌商图片">
+      <el-table-column align="center" property="picUrl" label="品牌机构图片">
         <template slot-scope="scope">
           <img v-if="scope.row.picUrl" :src="scope.row.picUrl" width="80">
         </template>
       </el-table-column>
 
-      <el-table-column align="center" min-width="400px" label="介绍" prop="desc"/>
+      <el-table-column align="center" min-width="400px" label="介绍" prop="desc" />
 
-      <el-table-column align="center" label="底价" prop="floorPrice"/>
+      <el-table-column align="center" label="底价" prop="floorPrice" />
 
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -40,26 +40,27 @@
     <!-- 添加或修改对话框 -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="dataForm" status-icon label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="品牌商名称" prop="name">
-          <el-input v-model="dataForm.name"/>
+        <el-form-item label="品牌机构名称" prop="name">
+          <el-input v-model="dataForm.name" />
         </el-form-item>
         <el-form-item label="介绍" prop="simpleDesc">
-          <el-input v-model="dataForm.desc"/>
+          <el-input v-model="dataForm.desc" />
         </el-form-item>
-        <el-form-item label="品牌商图片" prop="picUrl">
+        <el-form-item label="品牌机构图片" prop="picUrl">
           <el-upload
             :headers="headers"
             :action="uploadPath"
             :show-file-list="false"
             :on-success="uploadPicUrl"
             class="avatar-uploader"
-            accept=".jpg,.jpeg,.png,.gif">
+            accept=".jpg,.jpeg,.png,.gif"
+          >
             <img v-if="dataForm.picUrl" :src="dataForm.picUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"/>
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
           </el-upload>
         </el-form-item>
         <el-form-item label="底价" prop="floorPrice">
-          <el-input v-model="dataForm.floorPrice"/>
+          <el-input v-model="dataForm.floorPrice" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -136,7 +137,7 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '品牌商名称不能为空', trigger: 'blur' }
+          { required: true, message: '品牌机构名称不能为空', trigger: 'blur' }
         ]
       },
       downloadLoading: false
@@ -268,18 +269,18 @@ export default {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = [
-          '品牌商ID',
-          '品牌商名称',
+          '品牌机构ID',
+          '品牌机构名称',
           '介绍',
           '低价',
-          '品牌商图片'
+          '品牌机构图片'
         ]
         const filterVal = ['id', 'name', 'desc', 'floorPrice', 'picUrl']
         excel.export_json_to_excel2(
           tHeader,
           this.list,
           filterVal,
-          '品牌商信息'
+          '品牌机构信息'
         )
         this.downloadLoading = false
       })

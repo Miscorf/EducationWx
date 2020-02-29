@@ -9,7 +9,7 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">用户数量</div>
-            <count-to :start-val="0" :end-val="userTotal" :duration="2600" class="card-panel-num"/>
+            <count-to :start-val="0" :end-val="userTotal" :duration="2600" class="card-panel-num" />
           </div>
         </div>
       </el-col>
@@ -19,8 +19,8 @@
             <svg-icon icon-class="message" class-name="card-panel-icon" />
           </div>
           <div class="card-panel-description">
-            <div class="card-panel-text">商品数量</div>
-            <count-to :start-val="0" :end-val="goodsTotal" :duration="3000" class="card-panel-num"/>
+            <div class="card-panel-text">课程数量</div>
+            <count-to :start-val="0" :end-val="goodsTotal" :duration="3000" class="card-panel-num" />
           </div>
         </div>
       </el-col>
@@ -30,8 +30,8 @@
             <svg-icon icon-class="message" class-name="card-panel-icon" />
           </div>
           <div class="card-panel-description">
-            <div class="card-panel-text">货品数量</div>
-            <count-to :start-val="0" :end-val="productTotal" :duration="3200" class="card-panel-num"/>
+            <div class="card-panel-text">数量</div>
+            <count-to :start-val="0" :end-val="productTotal" :duration="3200" class="card-panel-num" />
           </div>
         </div>
       </el-col>
@@ -42,7 +42,7 @@
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">订单数量</div>
-            <count-to :start-val="0" :end-val="orderTotal" :duration="3600" class="card-panel-num"/>
+            <count-to :start-val="0" :end-val="orderTotal" :duration="3600" class="card-panel-num" />
           </div>
         </div>
       </el-col>
